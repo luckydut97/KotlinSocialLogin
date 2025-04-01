@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SocialLogin</string>
+    <!-- 소셜 로그인 API 키 (실제 키로 교체 필요) -->
+    <string name="kakao_native_app_key">YOUR_KAKAO_NATIVE_APP_KEY</string>
+    <string name="naver_client_id">YOUR_NAVER_CLIENT_ID</string>
+    <string name="naver_client_secret">YOUR_NAVER_CLIENT_SECRET</string>
+    <!-- 네이버 로그인 관련 -->
+    <string name="naver_login_client_name">SocialLogin</string>
+</resources>
