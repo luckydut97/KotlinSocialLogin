@@ -23,8 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.common.api.ApiException
 import com.luckydut97.sociallogin.model.SocialPlatform
 import com.luckydut97.sociallogin.ui.components.SocialLoginButton
 import com.luckydut97.sociallogin.viewmodel.SocialLoginViewModel
@@ -40,13 +38,8 @@ fun LoginScreen(viewModel: SocialLoginViewModel) {
     val googleSignInLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-        try {
-            val account = task.getResult(ApiException::class.java)
-            viewModel.handleGoogleSignInResult(account)
-        } catch (e: ApiException) {
-            Toast.makeText(context, "구글 로그인 실패: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
+        // 파라미터를 ActivityResult로 전달
+        viewModel.handleGoogleSignInResult(result)
     }
 
     // 에러 메시지 처리
@@ -94,7 +87,9 @@ fun LoginScreen(viewModel: SocialLoginViewModel) {
                 platform = SocialPlatform.GOOGLE,
                 text = "Google로 시작하기",
                 onClick = {
-                    googleSignInLauncher.launch(viewModel.getGoogleSignInClient().signInIntent)
+                    // GoogleSignInClient에서 signInIntent를 가져와서 launch
+                    val signInIntent = viewModel.getGoogleSignInClient().signInIntent
+                    googleSignInLauncher.launch(signInIntent)
                 }
             )
 
